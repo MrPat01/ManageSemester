@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.IsApproved)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index",Area, new { id = item.CourseID }) |
+                @Html.ActionLink("Select", "Index", new { id = item.CourseID }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
