@@ -7,7 +7,14 @@
 }
 
 <h2>Courses</h2>
+@{
+    var TempDataTest = (TempData["ErrorMessage"]);
 
+    <div>
+
+        <h3>@TempDataTest</h3>
+    </div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -55,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.IsApproved)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id = item.CourseID }) |
+                @Html.ActionLink("Select", "Index", new { courseId = item.CourseID }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
@@ -80,7 +87,7 @@
                 <td>
                     @item.Student.FullName
                 <td>
-                    @Html.DisplayFor(modelItem => item.Student.Gender)
+                    @(item.Student.Gender ? "Male" : "Female")
                 </td>
             </tr>
         }

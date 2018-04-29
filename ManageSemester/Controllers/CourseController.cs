@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -13,21 +14,21 @@ namespace ManageSemester.Controllers
         private SchoolContext db = new SchoolContext();
 
         // GET: Course
-        public ActionResult Index(int? CourseID)
+        public ActionResult Index(int? courseId)
         {
             var viewModel = new CourseIndexData();
             viewModel.Courses = db.Courses
                 .Include(i => i.Enrollments.Select(c => c.Student))
                 .OrderBy(i => i.CourseID);
 
-            if (CourseID != null)
+            if (courseId != null)
             {
-                ViewBag.CourseID = CourseID.Value;
+                ViewBag.CourseID = courseId.Value;
                 // Lazy loading
                 //viewModel.Enrollments = viewModel.Courses.Where(
                 //    x => x.CourseID == courseID).Single().Enrollments;
                 // Explicit loading
-                var selectedCourse = viewModel.Courses.Where(x => x.CourseID == CourseID).Single();
+                var selectedCourse = viewModel.Courses.Where(x => x.CourseID == courseId).Single();
                 db.Entry(selectedCourse).Collection(x => x.Enrollments).Load();
                 foreach (Enrollment enrollment in selectedCourse.Enrollments)
                 {
@@ -110,16 +111,26 @@ namespace ManageSemester.Controllers
         }
 
         // GET: Course/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Course course = db.Courses.Find(id);
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
             if (course == null)
             {
                 return HttpNotFound();
+            }
+            var enrollments = course.Enrollments.Count();
+            if (enrollments > 0)
+            {
+                TempData["ErrorMessage"] = "Delete failed, because the course has some student enrollment.";
+                return RedirectToAction("Index");
             }
             return View(course);
         }
@@ -129,9 +140,17 @@ namespace ManageSemester.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
+            try
+            {
+                Course course = db.Courses.Find(id);
+                db.Courses.Remove(course);
+                db.SaveChanges();
+            }
+            catch (DataException/* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 
