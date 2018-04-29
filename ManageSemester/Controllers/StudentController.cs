@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using ManageSemester.DAL;
 using ManageSemester.Models;
+using PagedList;
 
 namespace ManageSemester.Controllers
 {
@@ -16,28 +15,48 @@ namespace ManageSemester.Controllers
         private SchoolContext db = new SchoolContext();
 
         // GET: Student
-        public ActionResult Index(string sortOrder)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var students = from s in db.Students
-                select s;
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.FullName.Contains(searchString)
+                                               || s.Address.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
+                    students = students.OrderByDescending(s => s.FullName);
                     break;
                 case "Date":
-                    students = students.OrderBy(s => s.EnrollmentDate);
+                    students = students.OrderBy(s => s.DOB);
                     break;
                 case "date_desc":
-                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    students = students.OrderByDescending(s => s.DOB);
                     break;
-                default:
-                    students = students.OrderBy(s => s.LastName);
+                default:// Name ascending
+                    students = students.OrderBy(s => s.FullName);
                     break;
             }
-            return View(students.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(students.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Student/Details/5
@@ -66,7 +85,7 @@ namespace ManageSemester.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FullName,Address,Gender,DOB")] Student student)
+        public ActionResult Create([Bind(Include = "FullName,Address,Gender,DOB")] Student student)
         {
             try
             {
