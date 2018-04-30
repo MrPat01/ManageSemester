@@ -3,7 +3,7 @@ namespace ManageSemester.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Validation : DbMigration
+    public partial class _002 : DbMigration
     {
         public override void Up()
         {

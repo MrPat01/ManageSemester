@@ -127,7 +127,7 @@ namespace ManageSemester.Controllers
                 return HttpNotFound();
             }
             var enrollments = course.Enrollments.Count();
-            if (enrollments > 0)
+            if (enrollments != 0)
             {
                 TempData["ErrorMessage"] = "Delete failed, because the course has some student enrollment.";
                 return RedirectToAction("Index");

@@ -155,6 +155,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="DAL\SchoolContext.cs" />
@@ -162,21 +163,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804261259197_Initial.cs" />
-    <Compile Include="Migrations\201804261259197_Initial.Designer.cs">
-      <DependentUpon>201804261259197_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201804300831279_001.cs" />
+    <Compile Include="Migrations\201804300831279_001.Designer.cs">
+      <DependentUpon>201804300831279_001.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804280938389_MaxLengthOnNames.cs" />
-    <Compile Include="Migrations\201804280938389_MaxLengthOnNames.Designer.cs">
-      <DependentUpon>201804280938389_MaxLengthOnNames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804281134240_CourseModel.cs" />
-    <Compile Include="Migrations\201804281134240_CourseModel.Designer.cs">
-      <DependentUpon>201804281134240_CourseModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804281154324_Validation.cs" />
-    <Compile Include="Migrations\201804281154324_Validation.Designer.cs">
-      <DependentUpon>201804281154324_Validation.cs</DependentUpon>
+    <Compile Include="Migrations\201804301045426_002.cs" />
+    <Compile Include="Migrations\201804301045426_002.Designer.cs">
+      <DependentUpon>201804301045426_002.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -247,6 +240,11 @@
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Enrollment\Create.cshtml" />
+    <Content Include="Views\Enrollment\Delete.cshtml" />
+    <Content Include="Views\Enrollment\Details.cshtml" />
+    <Content Include="Views\Enrollment\Edit.cshtml" />
+    <Content Include="Views\Enrollment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,17 +263,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804261259197_Initial.resx">
-      <DependentUpon>201804261259197_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804300831279_001.resx">
+      <DependentUpon>201804300831279_001.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804280938389_MaxLengthOnNames.resx">
-      <DependentUpon>201804280938389_MaxLengthOnNames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804281134240_CourseModel.resx">
-      <DependentUpon>201804281134240_CourseModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804281154324_Validation.resx">
-      <DependentUpon>201804281154324_Validation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804301045426_002.resx">
+      <DependentUpon>201804301045426_002.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

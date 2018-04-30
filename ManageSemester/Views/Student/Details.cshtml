@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gender)
+            @(Model.Gender ? "Male" : "Female")
         </dd>
 
         <dt>
@@ -52,21 +52,30 @@
                     <th>CourseID</th>
                 </tr>
                 @foreach (var item in Model.Enrollments)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Course.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseID)
-                    </td>
-                </tr>
-        }
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseID)
+                        </td>
+                    </tr>
+                }
             </table>
         </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @if (Model.Enrollments.Count == 0)
+    {
+        @Html.ActionLink("Enroll", "Create", "Enrollment", new { id = Model.ID }, null)
+    }
+    else
+    {
+        <text>Enrolled</text>
+    } |
+
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -3,7 +3,7 @@ namespace ManageSemester.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class _001 : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,7 @@ namespace ManageSemester.Migrations
                 c => new
                     {
                         CourseID = c.Int(nullable: false),
-                        Title = c.String(),
+                        Title = c.String(maxLength: 50),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
                         IsApproved = c.Boolean(nullable: false),
@@ -38,7 +38,7 @@ namespace ManageSemester.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        FullName = c.String(nullable: false, maxLength: 30),
+                        FullName = c.String(nullable: false, maxLength: 50),
                         Address = c.String(nullable: false, maxLength: 60),
                         Gender = c.Boolean(nullable: false),
                         DOB = c.DateTime(nullable: false),

@@ -11,14 +11,14 @@ namespace ManageSemester.DAL
         {
             var students = new List<Student>
             {
-            new Student{FullName="Carson",Address="Ha Noi",Gender = true,DOB= DateTime.Parse("2005-09-01")},
-            new Student{FullName="Meredith",Address="Sai Gon",Gender = true,DOB=DateTime.Parse("2002-09-01")},
-            new Student{FullName="Arturo",Address="Da Nang",Gender = false,DOB=DateTime.Parse("2003-09-01")},
-            new Student{FullName="Gytis",Address="Dong 9",Gender = true,DOB=DateTime.Parse("2002-09-01")},
-            new Student{FullName="Yan",Address="Nghe An",Gender = true,DOB=DateTime.Parse("2002-09-01")},
-            new Student{FullName="Peggy",Address="Phu Tho",Gender = false,DOB=DateTime.Parse("2001-09-01")},
-            new Student{FullName="Laura",Address="Hai Phong",Gender = true,DOB=DateTime.Parse("2003-09-01")},
-            new Student{FullName="Nino",Address="Ho Chi Minh",Gender = true,DOB=DateTime.Parse("2005-09-01")}
+            new Student{FullName="CarsonYan",Address="Ha Noi",Gender = true,DOB= DateTime.Parse("2005-09-01")},
+            new Student{FullName="MeredithYan",Address="Sai Gon",Gender = true,DOB=DateTime.Parse("2002-09-01")},
+            new Student{FullName="ArturoYan",Address="Da Nang",Gender = false,DOB=DateTime.Parse("2003-09-01")},
+            new Student{FullName="GytisYan",Address="Dong 9",Gender = true,DOB=DateTime.Parse("2002-09-01")},
+            new Student{FullName="YanYan",Address="Nghe An",Gender = true,DOB=DateTime.Parse("2002-09-01")},
+            new Student{FullName="PeggyYan",Address="Phu Tho",Gender = false,DOB=DateTime.Parse("2001-09-01")},
+            new Student{FullName="LauraYan",Address="Hai Phong",Gender = true,DOB=DateTime.Parse("2003-09-01")},
+            new Student{FullName="NinoYan",Address="Ho Chi Minh",Gender = true,DOB=DateTime.Parse("2005-09-01")}
             };
 
             students.ForEach(s => context.Students.Add(s));

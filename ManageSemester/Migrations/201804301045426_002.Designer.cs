@@ -7,13 +7,13 @@ namespace ManageSemester.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class MaxLengthOnNames : IMigrationMetadata
+    public sealed partial class _002 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MaxLengthOnNames));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_002));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804280938389_MaxLengthOnNames"; }
+            get { return "201804301045426_002"; }
         }
         
         string IMigrationMetadata.Source
