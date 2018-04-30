@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 using ManageSemester.DAL;
 using ManageSemester.Models;
 using ManageSemester.ViewModels;
+using PagedList;
 
 namespace ManageSemester.Controllers
 {
@@ -14,20 +16,33 @@ namespace ManageSemester.Controllers
         private SchoolContext db = new SchoolContext();
 
         // GET: Course
-        public ActionResult Index(int? courseId)
+        public ActionResult Index(string searchString, int? courseId, DateTime? start, DateTime? end)
         {
             var viewModel = new CourseIndexData();
             viewModel.Courses = db.Courses
                 .Include(i => i.Enrollments.Select(c => c.Student))
                 .OrderBy(i => i.CourseID);
-
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                viewModel.Courses = db.Courses
+                    .Where(i => i.Title.Contains(searchString))
+                    .Include(i => i.Enrollments.Select(c => c.Student))
+                    .OrderBy(i => i.CourseID);
+                //.Courses.Where(c => c.Title.Contains(searchString));
+            }
+            if (start.HasValue || end.HasValue)
+            {
+                ViewBag.start = start;
+                ViewBag.end = end;
+                viewModel.Courses = db.Courses
+                    .Where(x => x.StartDate >= start
+                                || x.EndDate <= end)
+                    .Include(i => i.Enrollments.Select(c => c.Student))
+                                .OrderByDescending(x => x.StartDate);
+            }
             if (courseId != null)
             {
                 ViewBag.CourseID = courseId.Value;
-                // Lazy loading
-                //viewModel.Enrollments = viewModel.Courses.Where(
-                //    x => x.CourseID == courseID).Single().Enrollments;
-                // Explicit loading
                 var selectedCourse = viewModel.Courses.Where(x => x.CourseID == courseId).Single();
                 db.Entry(selectedCourse).Collection(x => x.Enrollments).Load();
                 foreach (Enrollment enrollment in selectedCourse.Enrollments)
@@ -37,7 +52,6 @@ namespace ManageSemester.Controllers
 
                 viewModel.Enrollments = selectedCourse.Enrollments;
             }
-
             return View(viewModel);
         }
 

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ManageSemester.Models.Enrollment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Enrollment";
 }
 
-<h2>Index</h2>
+<h2>Enrollment</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Course.Title)
+            Course
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student.FullName)
+            Student Name
         </th>
         <th></th>
     </tr>
