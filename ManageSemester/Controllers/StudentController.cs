@@ -141,11 +141,11 @@ namespace ManageSemester.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Student student = db.Students.Find(id);
             if (saveChangesError.GetValueOrDefault())
             {
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
-            Student student = db.Students.Find(id);
             if (student == null)
             {
                 return HttpNotFound();

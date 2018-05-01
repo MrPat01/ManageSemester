@@ -30,16 +30,34 @@ namespace ManageSemester.Controllers
                     .OrderBy(i => i.CourseID);
                 //.Courses.Where(c => c.Title.Contains(searchString));
             }
-            if (start.HasValue || end.HasValue)
+            if (start.HasValue && end.HasValue)
             {
                 ViewBag.start = start;
                 ViewBag.end = end;
                 viewModel.Courses = db.Courses
-                    .Where(x => x.StartDate >= start
-                                || x.EndDate <= end)
+                    .Where(x => x.StartDate >= start && x.EndDate <= end)
                     .Include(i => i.Enrollments.Select(c => c.Student))
-                                .OrderByDescending(x => x.StartDate);
+                                .OrderByDescending(x => x.CourseID);
             }
+            if (start.HasValue && !end.HasValue)
+            {
+                ViewBag.start = start;
+                ViewBag.end = end;
+                viewModel.Courses = db.Courses
+                    .Where(x => x.StartDate >= start)
+                    .Include(i => i.Enrollments.Select(c => c.Student))
+                    .OrderByDescending(x => x.StartDate);
+            }
+            if (!start.HasValue && end.HasValue)
+            {
+                ViewBag.start = start;
+                ViewBag.end = end;
+                viewModel.Courses = db.Courses
+                    .Where(x => x.EndDate <= end)
+                    .Include(i => i.Enrollments.Select(c => c.Student))
+                    .OrderByDescending(x => x.EndDate);
+            }
+
             if (courseId != null)
             {
                 ViewBag.CourseID = courseId.Value;

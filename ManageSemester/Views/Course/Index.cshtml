@@ -22,7 +22,7 @@
 @using (Html.BeginForm("Index", "Course", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString")
+        Find by Title: @Html.TextBox("SearchString")
         <input type="submit" value="Search" />
     </p>
 }
@@ -31,11 +31,7 @@
 {
     <p>
         Start Date: @Html.TextBox("start")
-    </p>
-    <p>
         End Date: @Html.TextBox("end")
-    </p>
-    <p>
         <input type="submit" value="Search by Date" />
     </p>
 }
@@ -56,7 +52,7 @@
             EndDate
         </th>
         <th>
-            IsApproved
+            Approved
         </th>
         <th>
             Student
